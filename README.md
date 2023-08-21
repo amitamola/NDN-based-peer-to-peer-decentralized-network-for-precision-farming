@@ -1,5 +1,25 @@
 ## Short Description of implementation, for context
-Our application is a wireless vehicular network implementation (i.e. drones). This application is run on a Pi through the `master_process.py` file. This file will create a number of `drone.py` subprocesses, which each have their own coordinates as the move around our coordinate plane. `master_process.py` is used to carry out the following tasks:
+
+![network.png](assets/network_and_elements.png)
+
+Our application is a wireless vehicular network implementation (i.e. drones). For more details on this work, checkout the [paper](https://drive.google.com/file/d/1ubjM-tnMJ4CjP6JCfLDzzLKBAhnKFE_F/view?usp=drive_link) and [presentation](https://docs.google.com/presentation/d/18ZTHQCuXBZ-XmB28yyyUjvqkz11OJQPT/edit?usp=sharing&ouid=108396492433206079641&rtpof=true&sd=true).
+
+
+There are two important components to a NDN network:
+### Interest Packets
+Interest packets are sent by a drone to request data from another drone. They are sent to the IP address of the drone that has the data, and the name of the data (i.e. the namespace of the data). The Interest packet is then routed through the network to the drone that has the data, and the Data packet is sent back to the drone that requested the data.
+
+![packets.png](assets/interest_packet.png)
+
+
+### Data Packets
+Data packets are sent by a drone in response to an Interest packet. They are sent to the IP address of the drone that requested the data, and the name of the data (i.e. the namespace of the data). The Data packet is then routed through the network to the drone that requested the data.
+
+![packets.png](assets/data_packet.png)
+
+
+# Implementation
+This application is run on a Pi through the `master_process.py` file. This file will create a number of `drone.py` subprocesses, which each have their own coordinates as the move around our coordinate plane. `master_process.py` is used to carry out the following tasks:
 * keep track of the coordinates of each drone subprocess
 * determine if two drones are are within a certain range of each other in the coordinate plane, and if they are, they are considered to be wirelessly connected (and are allowed to communicate with each other, advertise their data with each other, etc.)
 * communicate these drone coordinates with other Pis, so that drone subprocesses can communicate across Pis.
