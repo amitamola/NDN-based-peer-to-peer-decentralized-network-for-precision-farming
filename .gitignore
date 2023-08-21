@@ -1,0 +1,10 @@
+.DS_Store
+.ssh
+.idea
+.vscode
+out
+__pycache__
+drone_output/*
+!drone_output/dummy.txt
+outfiles/*
+!outfiles/dummy.txt
